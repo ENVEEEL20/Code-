@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Программист - Кәсіби Веб-сайт</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { primary: '#3B82F6', secondary: '#6B7280' }, borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px' } } } }</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .progress-bar {
+            height: 6px;
+            border-radius: 3px;
+            background-color: #2a2a2a;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s ease-in-out;
+        }
+
+        .tool-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.1);
+        }
+
+        .skill-card {
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: scale(1.03);
+        }
+
+        input,
+        textarea {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            color: white;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #3B82F6;
+            outline: none;
+        }
+
+        .custom-checkbox {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 4px;
+        }
+
+        .custom-checkbox:hover input~.checkmark {
+            background-color: #2a2a2a;
+        }
+
+        .custom-checkbox input:checked~.checkmark {
+            background-color: #3B82F6;
+            border-color: #3B82F6;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .custom-checkbox input:checked~.checkmark:after {
+            display: block;
+        }
+
+        .custom-checkbox .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 6px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .logo {
+            height: auto;
+            width: 150px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Навигация -->
+    <nav class="fixed top-0 left-0 w-full bg-black bg-opacity-90 backdrop-blur-sm z-50 border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <img src="logo.png" alt="logo" class="logo">
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-300 hover:text-primary transition-colors">Басты бет</a>
+                    <a href="#about" class="text-gray-300 hover:text-primary transition-colors">Программист</a>
+                    <a href="#skills" class="text-gray-300 hover:text-primary transition-colors">Дағдылар</a>
+                    <a href="#tools" class="text-gray-300 hover:text-primary transition-colors">Құралдар</a>
+                    <a href="#contact" class="text-gray-300 hover:text-primary transition-colors">Байланыс</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="w-10 h-10 flex items-center justify-center text-white">
+                        <i class="ri-menu-line ri-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-black bg-opacity-95 w-full">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="#home" class="text-gray-300 hover:text-primary transition-colors py-2">Басты бет</a>
+                <a href="#about" class="text-gray-300 hover:text-primary transition-colors py-2">Программист</a>
+                <a href="#skills" class="text-gray-300 hover:text-primary transition-colors py-2">Дағдылар</a>
+                <a href="#tools" class="text-gray-300 hover:text-primary transition-colors py-2">Құралдар</a>
+                <a href="#contact" class="text-gray-300 hover:text-primary transition-colors py-2">Байланыс</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Басты бет (Hero Section) -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-16"
+        style="background-image: url('https://readdy.ai/api/search-image?query=minimalist%20dark%20coding%20background%20with%20subtle%20blue%20and%20purple%20glowing%20code%20elements%2C%20abstract%20digital%20pattern%2C%20modern%20tech%20aesthetic%2C%20clean%20design%2C%20dark%20theme%20programming%20environment%20with%20matrix-like%20elements&width=1920&height=1080&seq=1&orientation=landscape'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-black bg-opacity-70"></div>
+        <div class="container mx-auto px-6 z-10">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="w-full md:w-1/2 text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                        <span class="text-white">Болашақ</span>
+                        <span class="text-primary">Кодта</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-xl">
+                        Заманауи технологиялар әлеміне қош келдіңіз. Программист болу – бұл болашақты қалыптастыру.
+                    </p>
+                    <div
+                        class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
+                        <a href="#about"
+                            class="bg-primary text-white px-8 py-3 !rounded-button whitespace-nowrap font-medium hover:bg-blue-600 transition-colors">
+                            Толығырақ білу
+                        </a>
+                        <a href="#contact"
+                            class="bg-transparent border border-white text-white px-8 py-3 !rounded-button whitespace-nowrap font-medium hover:bg-white hover:text-black transition-colors">
+                            Байланысқа шығу
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 mt-12 md:mt-0">
+                    <!-- Анимация орны -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- "Программист деген кім?" Бөлімі -->
+    <section id="about" class="py-24 bg-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Программист деген кім?</h2>
+                <div class="w-24 h-1 bg-primary mx-auto"></div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="w-full md:w-1/2 mb-10 md:mb-0">
+                    <img src="https://readdy.ai/api/search-image?query=professional%20programmer%20working%20at%20night%2C%20dark%20minimalist%20workspace%20with%20blue%20glow%20from%20multiple%20monitors%2C%20focused%20on%20coding%2C%20side%20profile%20view%2C%20detailed%20workspace%20setup%20with%20mechanical%20keyboard&width=600&height=600&seq=2&orientation=squarish"
+                        alt="Программист" class="rounded-lg w-full h-auto shadow-xl object-cover object-top">
+                </div>
+
+                <div class="w-full md:w-1/2 md:pl-12">
+                    <p class="text-lg text-gray-300 mb-6">
+                        Программист – бұл компьютерлік бағдарламаларды жасайтын, тестілейтін және қолдайтын маман. Ол
+                        компьютерлік кодты жазу арқылы әртүрлі мәселелерді шешеді және инновациялық шешімдер ұсынады.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                        <div class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                            <div class="w-12 h-12 bg-blue-900 rounded-full flex items-center justify-center mb-4">
+                                <i class="ri-code-line ri-lg text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Код жазу</h3>
+                            <p class="text-gray-400">Әртүрлі программалау тілдерінде код жазу және оны оңтайландыру</p>
+                        </div>
+
+                        <div class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                            <div class="w-12 h-12 bg-blue-900 rounded-full flex items-center justify-center mb-4">
+                                <i class="ri-bug-line ri-lg text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Мәселелерді шешу</h3>
+                            <p class="text-gray-400">Күрделі мәселелерді талдау және оларға тиімді шешімдер табу</p>
+                        </div>
+
+                        <div class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                            <div class="w-12 h-12 bg-blue-900 rounded-full flex items-center justify-center mb-4">
+                                <i class="ri-team-line ri-lg text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Командада жұмыс</h3>
+                            <p class="text-gray-400">Басқа әзірлеушілермен және мамандармен бірлесіп жұмыс істеу</p>
+                        </div>
+
+                        <div class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                            <div class="w-12 h-12 bg-blue-900 rounded-full flex items-center justify-center mb-4">
+                                <i class="ri-book-open-line ri-lg text-primary"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Үздіксіз оқу</h3>
+                            <p class="text-gray-400">Жаңа технологияларды үйрену және кәсіби дағдыларды жетілдіру</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Негізгі Дағдылар Секциясы -->
+    <section id="skills" class="py-24 bg-gradient-to-b from-black to-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Негізгі Дағдылар</h2>
+                <div class="w-24 h-1 bg-primary mx-auto"></div>
+                <p class="text-gray-300 mt-6 max-w-2xl mx-auto">
+                    Заманауи программист меңгеруі тиіс негізгі технологиялар мен программалау тілдері
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- HTML -->
+                <div class="skill-card bg-gray-900 rounded-lg overflow-hidden border border-gray-800">
+                    <div class="p-8">
+                        <div
+                            class="w-16 h-16 bg-orange-900 bg-opacity-20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <i class="ri-html5-line ri-2x text-orange-500"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-center mb-4">HTML</h3>
+                        <p class="text-gray-400 text-center mb-6">
+                            Веб-беттердің құрылымын анықтайтын негізгі тіл. Барлық веб-әзірлеу HTML-ден басталады.
+                        </p>
+                        <div class="mb-2 flex justify-between">
+                            <span class="text-sm text-gray-400">Меңгеру деңгейі</span>
+                            <span class="text-sm text-gray-400">90%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-orange-500" style="width: 90%"></div>
+                        </div>
+
+                        <div class="mt-8">
+                            <h4 class="text-lg font-semibold mb-3">Негізгі мүмкіндіктер:</h4>
+                            <ul class="space-y-2 text-gray-400">
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-primary"></i>
+                                    </div>
+                                    <span>Семантикалық тегтер</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-primary"></i>
+                                    </div>
+                                    <span>Формалар құру</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-primary"></i>
+                                    </div>
+                                    <span>Мультимедиа интеграциясы</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JavaScript -->
+                <div class="skill-card bg-gray-900 rounded-lg overflow-hidden border border-gray-800">
+                    <div class="p-8">
+                        <div
+                            class="w-16 h-16 bg-yellow-900 bg-opacity-20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <i class="ri-javascript-line ri-2x text-yellow-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-center mb-4">JavaScript</h3>
+                        <p class="text-gray-400 text-center mb-6">
+                            Веб-беттерге интерактивтілік қосатын және заманауи веб-әзірлеудің негізі болатын тіл.
+                        </p>
+                        <div class="mb-2 flex justify-between">
+                            <span class="text-sm text-gray-400">Меңгеру деңгейі</span>
+                            <span class="text-sm text-gray-400">85%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-yellow-400" style="width: 85%"></div>
+                        </div>
+
+                        <div class="mt-8">
+                            <h4 class="text-lg font-semibold mb-3">Негізгі мүмкіндіктер:</h4>
+                            <ul class="space-y-2 text-gray-400">
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-primary"></i>
+                                    </div>
+                                    <span>DOM манипуляциясы</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-primary"></i>
+                                    </div>
+                                    <span>Асинхронды программалау</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-primary"></i>
+                                    </div>
+                                    <span>Заманауи фреймворктер</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Python -->
+                <div class="skill-card bg-gray-900 rounded-lg overflow-hidden border border-gray-800">
+                    <div class="p-8">
+                        <div
+                            class="w-16 h-16 bg-blue-900 bg-opacity-20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <i class="ri-python-line ri-2x text-blue-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-center mb-4">Python</h3>
+                        <p class="text-gray-400 text-center mb-6">
+                            Оқуға оңай және көп мақсатты программалау тілі. Деректерді талдау, AI және веб-әзірлеуде
+                            кеңінен қолданылады.
+                        </p>
+                        <div class="mb-2 flex justify-between">
+                            <span class="text-sm text-gray-400">Меңгеру деңгейі</span>
+                            <span class="text-sm text-gray-400">80%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill bg-blue-500" style="width: 80%"></div>
+                        </div>
+
+                        <div class="mt-8">
+                            <h4 class="text-lg font-semibold mb-3">Негізгі мүмкіндіктер:</h4>
+                            <ul class="space-y-2 text-gray-400">
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-primary"></i>
+                                    </div>
+                                    <span>Деректер ғылымы</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-primary"></i>
+                                    </div>
+                                    <span>Веб-әзірлеу (Django, Flask)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-primary"></i>
+                                    </div>
+                                    <span>Автоматтандыру және скриптинг</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Қолданылатын Құралдар -->
+    <section id="tools" class="py-24 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Қолданылатын Құралдар</h2>
+                <div class="w-24 h-1 bg-primary mx-auto"></div>
+                <p class="text-gray-300 mt-6 max-w-2xl mx-auto">
+                    Заманауи программист жұмысын жеңілдететін және тиімділігін арттыратын негізгі құралдар
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <!-- VS Code -->
+                <div class="tool-card bg-black bg-opacity-60 rounded-lg overflow-hidden border border-gray-800 p-8">
+                    <div class="flex items-center mb-6">
+                        <div
+                            class="w-16 h-16 bg-blue-900 bg-opacity-20 rounded-full flex items-center justify-center mr-6">
+                            <i class="ri-visual-studio-line ri-2x text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Visual Studio Code</h3>
+                            <p class="text-gray-400">Код редакторы</p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-300 mb-6">
+                        Microsoft компаниясы жасаған, көптеген программалау тілдерін қолдайтын және кеңейтімдер арқылы
+                        функционалдылығын арттыруға болатын заманауи код редакторы.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-900 p-4 rounded">
+                            <h4 class="font-semibold mb-2">Артықшылықтары</h4>
+                            <ul class="space-y-2 text-gray-400">
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-green-500"></i>
+                                    </div>
+                                    <span>Интеграцияланған терминал</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-green-500"></i>
+                                    </div>
+                                    <span>Кеңейтімдер жүйесі</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-green-500"></i>
+                                    </div>
+                                    <span>Git интеграциясы</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-900 p-4 rounded">
+                            <h4 class="font-semibold mb-2">Негізгі мүмкіндіктер</h4>
+                            <ul class="space-y-2 text-gray-400">
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-arrow-right-s-line text-primary"></i>
+                                    </div>
+                                    <span>IntelliSense</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-arrow-right-s-line text-primary"></i>
+                                    </div>
+                                    <span>Дебаггинг</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-arrow-right-s-line text-primary"></i>
+                                    </div>
+                                    <span>Тақырыптар кітапханасы</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Git -->
+                <div class="tool-card bg-black bg-opacity-60 rounded-lg overflow-hidden border border-gray-800 p-8">
+                    <div class="flex items-center mb-6">
+                        <div
+                            class="w-16 h-16 bg-orange-900 bg-opacity-20 rounded-full flex items-center justify-center mr-6">
+                            <i class="ri-git-branch-line ri-2x text-orange-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Git</h3>
+                            <p class="text-gray-400">Нұсқаларды басқару жүйесі</p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-300 mb-6">
+                        Код өзгерістерін бақылауға, бірнеше әзірлеушілердің жұмысын үйлестіруге және жобаның әртүрлі
+                        нұсқаларын басқаруға мүмкіндік беретін құрал.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-900 p-4 rounded">
+                            <h4 class="font-semibold mb-2">Артықшылықтары</h4>
+                            <ul class="space-y-2 text-gray-400">
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-green-500"></i>
+                                    </div>
+                                    <span>Нұсқаларды бақылау</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-green-500"></i>
+                                    </div>
+                                    <span>Тармақтау мүмкіндігі</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-check-line text-green-500"></i>
+                                    </div>
+                                    <span>Қашықтан репозиторийлер</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-900 p-4 rounded">
+                            <h4 class="font-semibold mb-2">Негізгі мүмкіндіктер</h4>
+                            <ul class="space-y-2 text-gray-400">
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-arrow-right-s-line text-primary"></i>
+                                    </div>
+                                    <span>Commit және Push</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-arrow-right-s-line text-primary"></i>
+                                    </div>
+                                    <span>Merge және Rebase</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-5 h-5 flex items-center justify-center mr-2 mt-1">
+                                        <i class="ri-arrow-right-s-line text-primary"></i>
+                                    </div>
+                                    <span>Pull Request</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Байланыс Бөлімі -->
+    <section id="contact" class="py-24 bg-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Байланыс</h2>
+                <div class="w-24 h-1 bg-primary mx-auto"></div>
+                <p class="text-gray-300 mt-6 max-w-2xl mx-auto">
+                    Сұрақтарыңыз бар ма? Жобаңыз туралы айтқыңыз келе ме? Бізбен байланысқа шығыңыз!
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="w-full lg:w-1/2">
+                    <form class="bg-gray-900 p-8 rounded-lg border border-gray-800">
+                        <h3 class="text-2xl font-bold mb-6">Хабарлама жіберу</h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name"
+                                    class="block text-sm font-medium text-gray-400 mb-2">Аты-жөніңіз</label>
+                                <input type="text" id="name"
+                                    class="w-full px-4 py-3 rounded border-none bg-gray-800 text-white focus:ring-2 focus:ring-primary"
+                                    placeholder="Аты-жөніңізді енгізіңіз">
+                            </div>
+
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                                <input type="email" id="email"
+                                    class="w-full px-4 py-3 rounded border-none bg-gray-800 text-white focus:ring-2 focus:ring-primary"
+                                    placeholder="Email адресіңізді енгізіңіз">
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="subject" class="block text-sm font-medium text-gray-400 mb-2">Тақырып</label>
+                            <input type="text" id="subject"
+                                class="w-full px-4 py-3 rounded border-none bg-gray-800 text-white focus:ring-2 focus:ring-primary"
+                                placeholder="Хабарлама тақырыбын енгізіңіз">
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="message" class="block text-sm font-medium text-gray-400 mb-2">Хабарлама</label>
+                            <textarea id="message" rows="5"
+                                class="w-full px-4 py-3 rounded border-none bg-gray-800 text-white focus:ring-2 focus:ring-primary"
+                                placeholder="Хабарламаңызды жазыңыз"></textarea>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="custom-checkbox">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                <span class="text-gray-400 ml-2">Мен құпиялылық саясатымен келісемін</span>
+                            </label>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-primary text-white px-6 py-3 !rounded-button whitespace-nowrap font-medium hover:bg-blue-600 transition-colors">
+                            Жіберу
+                        </button>
+                    </form>
+                </div>
+
+                <div class="w-full lg:w-1/2">
+                    <div class="bg-gray-900 p-8 rounded-lg border border-gray-800 h-full">
+                        <h3 class="text-2xl font-bold mb-6">Байланыс ақпараты</h3>
+
+                        <div class="space-y-6 mb-8">
+                            <div class="flex items-start">
+                                <div
+                                    class="w-12 h-12 bg-blue-900 bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                    <i class="ri-map-pin-line ri-lg text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Мекен-жайымыз</h4>
+                                    <p class="text-gray-400">Атырау қаласы, Привогзальный, 45б</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div
+                                    class="w-12 h-12 bg-blue-900 bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                    <i class="ri-mail-line ri-lg text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Email</h4>
+                                    <p class="text-gray-400">bbb_danyal@mail.ru</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div
+                                    class="w-12 h-12 bg-blue-900 bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                    <i class="ri-phone-line ri-lg text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Телефон</h4>
+                                    <p class="text-gray-400">+7 (775) 380-97-40</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <h4 class="font-semibold mb-4">Әлеуметтік желілер</h4>
+                            <div class="flex space-x-4">
+                                <a href="#"
+                                    class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                                    <i class="ri-facebook-fill ri-lg text-white"></i>
+                                </a>
+                                <a href="#"
+                                    class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                                    <i class="ri-twitter-fill ri-lg text-white"></i>
+                                </a>
+                                <a href="#"
+                                    class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                                    <i class="ri-instagram-fill ri-lg text-white"></i>
+                                </a>
+                                <a href="#"
+                                    class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                                    <i class="ri-linkedin-fill ri-lg text-white"></i>
+                                </a>
+                                <a href="#"
+                                    class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                                    <i class="ri-github-fill ri-lg text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="h-64 bg-gray-800 rounded-lg overflow-hidden">
+                            <div class="w-full h-full"
+                                style="background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png'); background-size: cover; background-position: center;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <a href="#" class="text-2xl font-['Pacifico'] text-white mb-4 inline-block">logo</a>
+                    <p class="text-gray-400 mb-6">
+                        Біз заманауи технологиялар әлемінде сіздің сенімді серіктесіңіз боламыз.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="ri-facebook-fill ri-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="ri-twitter-fill ri-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="ri-instagram-fill ri-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="ri-linkedin-fill ri-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Жылдам сілтемелер</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-primary transition-colors">Басты бет</a>
+                        </li>
+                        <li><a href="#about" class="text-gray-400 hover:text-primary transition-colors">Программист</a>
+                        </li>
+                        <li><a href="#skills" class="text-gray-400 hover:text-primary transition-colors">Дағдылар</a>
+                        </li>
+                        <li><a href="#tools" class="text-gray-400 hover:text-primary transition-colors">Құралдар</a>
+                        </li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-primary transition-colors">Байланыс</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Ресурстар</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Блог</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Оқулықтар</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Жиі қойылатын
+                                сұрақтар</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Құжаттама</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Қолдау</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Жаңалықтар</h4>
+                    <p class="text-gray-400 mb-4">
+                        Соңғы жаңалықтар мен ұсыныстар туралы хабардар болыңыз
+                    </p>
+                    <form>
+                        <div class="flex">
+                            <input type="email" placeholder="Email адресіңіз"
+                                class="w-full px-4 py-2 rounded-l border-none bg-gray-800 text-white focus:ring-2 focus:ring-primary">
+                            <button type="submit"
+                                class="bg-primary text-white px-4 py-2 rounded-r !rounded-button whitespace-nowrap font-medium hover:bg-blue-600 transition-colors">
+                                Жазылу
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                    &copy; 2025 Программист. Барлық құқықтар қорғалған.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors text-sm">Құпиялылық
+                        саясаты</a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors text-sm">Пайдалану
+                        шарттары</a>
+                    <a href="#" class="text-gray-400 hover:text-primary transition-colors text-sm">Cookie саясаты</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Жоғары көтерілу батырмасы -->
+    <button id="back-to-top"
+        class="back-to-top w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:bg-blue-600 transition-colors">
+        <i class="ri-arrow-up-line ri-lg"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Мобильді мәзір
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuToggle.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Мобильді мәзірдегі сілтемелерді жабу
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Прогресс жолақтарын анимациялау
+            const progressBars = document.querySelectorAll('.progress-fill');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.width = entry.target.parentElement.dataset.progress || entry.target.style.width;
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            progressBars.forEach(bar => {
+                observer.observe(bar);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Жоғары көтерілу батырмасы
+            const backToTopButton = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+
+            backToTopButton.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Плавный скролл для якорных ссылок
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerOffset = 80;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
